@@ -77,7 +77,9 @@ const AddToHomeButton: React.FC = () => {
     }
   };
 
-  const handleDismiss = () => {
+  const handleDismiss = (e: React.MouseEvent | React.TouchEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     setShowInstallPrompt(false);
     setDeferredPrompt(null);
   };
@@ -88,7 +90,7 @@ const AddToHomeButton: React.FC = () => {
   }
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 z-50 animate-in slide-in-from-bottom-2">
+    <div className="fixed bottom-4 left-4 right-4 z-50 animate-in slide-in-from-bottom-2 pointer-events-auto">
       <div className="bg-gray-800 border border-gray-700 rounded-2xl p-4 shadow-2xl backdrop-blur-sm">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
@@ -116,7 +118,8 @@ const AddToHomeButton: React.FC = () => {
             )}
             <button
               onClick={handleDismiss}
-              className="text-gray-400 hover:text-white transition-colors"
+              className="text-gray-400 hover:text-white transition-colors p-2 -m-2 touch-manipulation"
+              style={{ minWidth: '44px', minHeight: '44px' }}
             >
               <X size={20} />
             </button>
