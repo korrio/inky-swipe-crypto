@@ -17,11 +17,16 @@ const AddToHomeButton: React.FC = () => {
   const [showInstallPrompt, setShowInstallPrompt] = useState(false);
   const [isIOS, setIsIOS] = useState(false);
   const [isStandalone, setIsStandalone] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     // Check if running on iOS
     const iOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
     setIsIOS(iOS);
+
+    // Check if running on mobile device
+    const mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    setIsMobile(mobile);
 
     // Check if app is already installed (standalone mode)
     const standalone = window.matchMedia('(display-mode: standalone)').matches;
@@ -101,8 +106,8 @@ const AddToHomeButton: React.FC = () => {
     setDeferredPrompt(null);
   };
 
-  // Don't show if already installed or if no install prompt available
-  if (isStandalone || (!showInstallPrompt && !isIOS)) {
+  // Don't show if already installed, on mobile, or if no install prompt available
+  if (isStandalone || isMobile || (!showInstallPrompt && !isIOS)) {
     return null;
   }
 

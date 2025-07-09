@@ -4,6 +4,7 @@ import React, { useState, useMemo, useRef } from 'react';
 import { TrendingUp, TrendingDown, BarChart3, DollarSign, Volume2, SkipForward, ShoppingCart } from 'lucide-react';
 import AddToHomeButton from './AddToHomeButton';
 import MobileDebugger from './MobileDebugger';
+import DonutChart from './DonutChart';
 
 // Mock data for stocks and crypto
 const mockAssets = [
@@ -472,7 +473,7 @@ const CryptoSwipeApp = () => {
     }, {});
     
     return (
-      <div className="h-screen bg-gray-900 flex items-center justify-center p-4 relative overflow-hidden">
+      <div className="h-screen bg-gray-900 flex flex-col p-4 relative overflow-hidden">
         {/* Background gradient */}
         <div 
           className="absolute inset-0 pointer-events-none"
@@ -481,7 +482,11 @@ const CryptoSwipeApp = () => {
             filter: 'blur(200px)'
           }}
         />
-        <div className="text-center relative z-10 max-w-md">
+        
+        {/* Scrollable content container */}
+        <div className="flex-1 overflow-y-auto">
+          <div className="flex items-center justify-center min-h-full py-8">
+            <div className="text-center relative z-10 max-w-md w-full">
           <h2 className="text-3xl font-bold text-white mb-4">Portfolio Summary 📊</h2>
           <p className="text-gray-400 mb-6">You've completed your asset selection</p>
           
@@ -507,22 +512,24 @@ const CryptoSwipeApp = () => {
                   <p className="text-sm text-gray-400">Average Performance</p>
                 </div>
                 
-                {/* Asset type breakdown */}
-                <div className="space-y-2">
+                {/* Asset type breakdown with donut chart */}
+                <div className="space-y-4">
                   <p className="text-sm text-gray-400 text-center">Portfolio Breakdown</p>
-                  {Object.entries(assetTypes).map(([type, count]) => (
-                    <div key={type} className="flex justify-between items-center">
-                      <div className="flex items-center space-x-2">
-                        <div className={`w-3 h-3 rounded-full ${
-                          type === 'crypto' ? 'bg-yellow-500' :
-                          type === 'stock' ? 'bg-blue-500' :
-                          'bg-green-500'
-                        }`} />
-                        <span className="text-sm text-gray-300 capitalize">{type}</span>
-                      </div>
-                      <span className="text-sm text-white">{count as number}</span>
-                    </div>
-                  ))}
+                  
+                  {/* Donut Chart */}
+                  <div className="flex justify-center">
+                    <DonutChart
+                      data={Object.entries(assetTypes).map(([type, count]) => ({
+                        label: type,
+                        value: count as number,
+                        color: type === 'crypto' ? '#EAB308' :
+                               type === 'stock' ? '#3B82F6' :
+                               '#10B981'
+                      }))}
+                      size={140}
+                      strokeWidth={16}
+                    />
+                  </div>
                 </div>
               </>
             )}
@@ -560,6 +567,8 @@ const CryptoSwipeApp = () => {
           >
             Start Over
           </button>
+            </div>
+          </div>
         </div>
       </div>
     );
