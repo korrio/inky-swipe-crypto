@@ -11,7 +11,6 @@ export const metadata: Metadata = {
   title: "Inky - Crypto Swipe Trading",
   description: "Swipe through crypto assets and build your portfolio",
   manifest: "/manifest.json",
-  themeColor: "#7133F5",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
@@ -22,8 +21,17 @@ export const metadata: Metadata = {
     icon: "/icons/icon-192x192.svg",
     apple: "/icons/icon-192x192.svg",
   },
-  viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
 };
+
+export function generateViewport() {
+  return {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+    themeColor: '#7133F5',
+  }
+}
 
 export default function RootLayout({
   children,

@@ -3,6 +3,7 @@
 import React, { useState, useMemo, useRef } from 'react';
 import { TrendingUp, TrendingDown, BarChart3, DollarSign, Volume2, SkipForward, ShoppingCart } from 'lucide-react';
 import AddToHomeButton from './AddToHomeButton';
+import MobileDebugger from './MobileDebugger';
 
 // Mock data for stocks and crypto
 const mockAssets = [
@@ -577,6 +578,9 @@ const CryptoSwipeApp = () => {
       
       {/* Add to Home Button */}
       <AddToHomeButton />
+      
+      {/* Mobile Debugger */}
+      <MobileDebugger />
       
       {/* Header */}
       <div className="flex items-center justify-between p-3 relative z-10 flex-shrink-0">
