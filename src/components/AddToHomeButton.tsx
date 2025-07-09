@@ -88,7 +88,7 @@ const AddToHomeButton: React.FC = () => {
   }
 
   return (
-    <div className="fixed top-4 left-4 right-4 z-50 animate-in slide-in-from-top-2">
+    <div className="fixed bottom-4 left-4 right-4 z-50 animate-in slide-in-from-bottom-2">
       <div className="bg-gray-800 border border-gray-700 rounded-2xl p-4 shadow-2xl backdrop-blur-sm">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
