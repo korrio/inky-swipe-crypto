@@ -111,9 +111,16 @@ const StackCard = ({ asset }: { asset: any }) => {
         <div className="mb-6">
           <MiniChart 
             data={Array.from({ length: 30 }, (_, i) => {
+              // Create deterministic data based on asset ID
+              const seed = asset.id;
+              const seededRandom = (index: number) => {
+                const x = Math.sin(seed * 9999 + index * 1234) * 10000;
+                return x - Math.floor(x);
+              };
+              
               const isPositive = asset.change > 0;
               const trend = isPositive ? 1 : -1;
-              return 10 + (Math.random() * 8 * trend) + (i * 0.2 * trend);
+              return 10 + (seededRandom(i) * 8 * trend) + (i * 0.2 * trend);
             })} 
             positive={asset.change > 0} 
           />
@@ -175,14 +182,21 @@ const SwipeCard = ({ asset, onSwipe, currentIndex, totalCards }: { asset: any, o
   const [startPos, setStartPos] = useState({ x: 0, y: 0 });
   const cardRef = useRef(null);
   
-  // Generate mock chart data
+  // Generate mock chart data deterministically based on asset ID
   const chartData = useMemo(() => {
-    const isPositive = Math.random() > 0.5;
+    // Create a simple seeded random function based on asset ID
+    const seed = asset.id;
+    const seededRandom = (index: number) => {
+      const x = Math.sin(seed * 9999 + index * 1234) * 10000;
+      return x - Math.floor(x);
+    };
+    
+    const isPositive = asset.change > 0;
     return Array.from({ length: 30 }, (_, i) => {
       const trend = isPositive ? 1 : -1;
-      return 10 + (Math.random() * 8 * trend) + (i * 0.2 * trend);
+      return 10 + (seededRandom(i) * 8 * trend) + (i * 0.2 * trend);
     });
-  }, [asset.id, timespan]);
+  }, [asset.id, asset.change, timespan]);
 
   const handleSwipe = (direction: string) => {
     setSwipeDirection(direction);
@@ -404,7 +418,12 @@ const SwipeCard = ({ asset, onSwipe, currentIndex, totalCards }: { asset: any, o
 const CryptoSwipeApp = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [liked, setLiked] = useState<any[]>([]);
-  const [shuffledAssets] = useState(() => [...mockAssets].sort(() => Math.random() - 0.5));
+  const [shuffledAssets, setShuffledAssets] = useState<any[]>([]);
+  
+  // Shuffle assets only on client side to avoid hydration mismatch
+  React.useEffect(() => {
+    setShuffledAssets([...mockAssets].sort(() => Math.random() - 0.5));
+  }, []);
 
   const handleSwipe = (direction: string) => {
     if (direction === 'right') {
@@ -419,6 +438,27 @@ const CryptoSwipeApp = () => {
     setCurrentIndex(0);
     setLiked([]);
   };
+
+  // Show loading state until assets are shuffled
+  if (shuffledAssets.length === 0) {
+    return (
+      <div className="h-screen bg-gray-900 flex items-center justify-center relative">
+        <div 
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: 'linear-gradient(90deg, #7133F5 20.19%, #A5A9D9 86.06%)',
+            filter: 'blur(200px)'
+          }}
+        />
+        <div className="text-center relative z-10">
+          <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
+            <TrendingUp size={20} className="text-white" />
+          </div>
+          <p className="text-white text-lg">Loading assets...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (currentIndex >= shuffledAssets.length) {
     const totalValue = liked.reduce((sum, asset) => sum + asset.price, 0);
