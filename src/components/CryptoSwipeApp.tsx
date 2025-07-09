@@ -30,6 +30,9 @@ const mockAssets = [
 // Simple chart component
 const MiniChart = ({ data, positive }: { data: number[], positive: boolean }) => {
   const points = data.map((point, index) => `${index * 4.67},${60 - point * 3}`).join(' ');
+  const lastPoint = data[data.length - 1];
+  const lastX = (data.length - 1) * 4.67;
+  const lastY = 60 - lastPoint * 3;
   
   return (
     <div className="h-32 w-full bg-gray-800 rounded-lg p-2">
@@ -42,6 +45,24 @@ const MiniChart = ({ data, positive }: { data: number[], positive: boolean }) =>
           strokeLinecap="round"
           strokeLinejoin="round"
         />
+        {/* Blinking point at the end */}
+        <circle
+          cx={lastX}
+          cy={lastY}
+          r="3"
+          fill={positive ? '#8B5CF6' : '#EF4444'}
+          className="animate-pulse"
+        />
+{/*        <circle
+          cx={lastX}
+          cy={lastY}
+          r="6"
+          fill="none"
+          stroke={positive ? '#8B5CF6' : '#EF4444'}
+          strokeWidth="1"
+          opacity="0.5"
+          className="animate-ping"
+        />*/}
       </svg>
     </div>
   );
@@ -131,11 +152,11 @@ const StackCard = ({ asset }: { asset: any }) => {
         {/* Action buttons (disabled) */}
         <div className="flex space-x-4">
           <div className="flex-1 bg-gray-700 text-gray-400 font-semibold py-4 px-6 rounded-xl flex items-center justify-center space-x-2">
-            <SkipForward size={20} />
+            {/*<SkipForward size={20} />*/}
             <span>Skip</span>
           </div>
           <div className="flex-1 bg-gray-700 text-gray-400 font-semibold py-4 px-6 rounded-xl flex items-center justify-center space-x-2">
-            <ShoppingCart size={20} />
+            {/*<ShoppingCart size={20} />*/}
             <span>Buy</span>
           </div>
         </div>
@@ -341,16 +362,16 @@ const SwipeCard = ({ asset, onSwipe, currentIndex, totalCards }: { asset: any, o
 
         {/* Market metrics */}
         <div className="grid grid-cols-2 gap-4 mb-6">
-          <div className="bg-gray-700 rounded-lg p-3">
+          <div className="rounded-lg p-3">
             <div className="flex items-center space-x-2 text-gray-400 text-sm mb-1">
-              <BarChart3 size={16} />
+              {/*<BarChart3 size={16} />*/}
               <span>Market Cap</span>
             </div>
             <p className="text-white font-semibold">{asset.marketCap}</p>
           </div>
-          <div className="bg-gray-700 rounded-lg p-3">
+          <div className="rounded-lg p-3">
             <div className="flex items-center space-x-2 text-gray-400 text-sm mb-1">
-              <Volume2 size={16} />
+              {/*<Volume2 size={16} />*/}
               <span>Volume</span>
             </div>
             <p className="text-white font-semibold">{asset.volume}</p>
@@ -363,14 +384,14 @@ const SwipeCard = ({ asset, onSwipe, currentIndex, totalCards }: { asset: any, o
             onClick={() => handleSwipe('left')}
             className="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-semibold py-4 px-6 rounded-xl transition-colors flex items-center justify-center space-x-2"
           >
-            <SkipForward size={20} />
+            {/*<SkipForward size={20} />*/}
             <span>Skip</span>
           </button>
           <button
             onClick={() => handleSwipe('right')}
             className="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-semibold py-4 px-6 rounded-xl transition-colors flex items-center justify-center space-x-2"
           >
-            <ShoppingCart size={20} />
+            {/*<ShoppingCart size={20} />*/}
             <span>Buy</span>
           </button>
         </div>
