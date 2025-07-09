@@ -40,6 +40,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            if (typeof eruda !== 'undefined') {
+              eruda.init();
+            }
+          `
+        }} />
+      </head>
       <body className={`${inter.className} antialiased`}>
         <AppProvider>
           {children}

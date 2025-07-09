@@ -17,8 +17,7 @@ const nextConfig = {
   
   // Optimize for mobile debugging
   devIndicators: {
-    buildActivity: true,
-    buildActivityPosition: 'bottom-right',
+    position: 'bottom-right',
   },
   
   // Enable source maps for debugging
