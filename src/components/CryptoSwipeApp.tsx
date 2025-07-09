@@ -201,9 +201,10 @@ const SwipeCard = ({ asset, onSwipe, currentIndex, totalCards }: { asset: any, o
 
   const handleSwipe = (direction: string) => {
     setSwipeDirection(direction);
+    // Start the next card movement immediately
+    onSwipe(direction);
     setTimeout(() => {
       setIsVisible(false);
-      setTimeout(() => onSwipe(direction), 300);
     }, 200);
   };
 
