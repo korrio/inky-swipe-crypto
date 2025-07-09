@@ -133,16 +133,16 @@ const StackCard = ({ asset }: { asset: any }) => {
 
         {/* Market metrics */}
         <div className="grid grid-cols-2 gap-4 mb-6">
-          <div className="bg-gray-700 rounded-lg p-3">
+          <div className="rounded-lg">
             <div className="flex items-center space-x-2 text-gray-400 text-sm mb-1">
-              <BarChart3 size={16} />
+              {/*<BarChart3 size={16} />*/}
               <span>Market Cap</span>
             </div>
             <p className="text-white font-semibold">{asset.marketCap}</p>
           </div>
-          <div className="bg-gray-700 rounded-lg p-3">
+          <div className="rounded-lg">
             <div className="flex items-center space-x-2 text-gray-400 text-sm mb-1">
-              <Volume2 size={16} />
+              {/*<Volume2 size={16} />*/}
               <span>Volume</span>
             </div>
             <p className="text-white font-semibold">{asset.volume}</p>
