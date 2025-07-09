@@ -8,8 +8,21 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "MDM Dashboard - Multi-Tenant iOS Device Management",
-  description: "Comprehensive iOS MDM system with phone financing capabilities",
+  title: "Inky - Crypto Swipe Trading",
+  description: "Swipe through crypto assets and build your portfolio",
+  manifest: "/manifest.json",
+  themeColor: "#7133F5",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Inky",
+    startupImage: "/icons/icon-192x192.svg",
+  },
+  icons: {
+    icon: "/icons/icon-192x192.svg",
+    apple: "/icons/icon-192x192.svg",
+  },
+  viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
 };
 
 export default function RootLayout({
