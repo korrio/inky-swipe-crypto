@@ -296,7 +296,7 @@ const SwipeCard = ({ asset, onSwipe, currentIndex, totalCards }: { asset: any, o
     }`}>
       <div 
         ref={cardRef}
-        className="bg-gray-800 rounded-2xl p-6 shadow-2xl border border-gray-700 cursor-grab active:cursor-grabbing select-none"
+        className="bg-gray-800 rounded-2xl p-4 shadow-2xl border border-gray-700 cursor-grab active:cursor-grabbing select-none"
         style={{
           transform: `translateX(${dragOffset.x}px) translateY(${dragOffset.y * 0.1}px) rotate(${rotation}deg)`,
           opacity: opacity,
@@ -339,12 +339,12 @@ const SwipeCard = ({ asset, onSwipe, currentIndex, totalCards }: { asset: any, o
         </div>
 
         {/* Chart */}
-        <div className="mb-6">
+        <div className="mb-4">
           <MiniChart data={chartData} positive={asset.change > 0} />
         </div>
 
         {/* Timespan selector */}
-        <div className="flex justify-center space-x-2 mb-6">
+        <div className="flex justify-center space-x-2 mb-4">
           {['1m', '15m', '1h'].map((time) => (
             <button
               key={time}
@@ -361,7 +361,7 @@ const SwipeCard = ({ asset, onSwipe, currentIndex, totalCards }: { asset: any, o
         </div>
 
         {/* Market metrics */}
-        <div className="grid grid-cols-2 gap-4 mb-6">
+        <div className="grid grid-cols-2 gap-4 mb-4">
           <div className="rounded-lg p-3">
             <div className="flex items-center space-x-2 text-gray-400 text-sm mb-1">
               {/*<BarChart3 size={16} />*/}
@@ -429,7 +429,7 @@ const CryptoSwipeApp = () => {
     }, {});
     
     return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4 relative">
+      <div className="h-screen bg-gray-900 flex items-center justify-center p-4 relative overflow-hidden">
         {/* Background gradient */}
         <div 
           className="absolute inset-0 pointer-events-none"
@@ -523,7 +523,7 @@ const CryptoSwipeApp = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 flex flex-col relative">
+    <div className="h-screen bg-gray-900 flex flex-col relative overflow-hidden">
       {/* Background gradient */}
       <div 
         className="absolute inset-0 pointer-events-none"
@@ -533,7 +533,7 @@ const CryptoSwipeApp = () => {
         }}
       />
       {/* Header */}
-      <div className="flex items-center justify-between p-4  relative z-10">
+      <div className="flex items-center justify-between p-3 relative z-10 flex-shrink-0">
         <div className="flex items-center space-x-3">
           <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center">
             <TrendingUp size={20} className="text-white" />
@@ -546,7 +546,7 @@ const CryptoSwipeApp = () => {
       </div>
 
       {/* Progress bar */}
-      <div className="px-4 py-2 relative z-10">
+      <div className="px-4 py-2 relative z-10 flex-shrink-0">
         <div className="w-full bg-gray-800 rounded-full h-2">
           <div 
             className="bg-purple-600 h-2 rounded-full transition-all duration-300"
@@ -585,7 +585,7 @@ const CryptoSwipeApp = () => {
       </div>
 
       {/* Footer */}
-      <div className="p-4 border-t border-gray-800">
+      <div className="p-3 border-t border-gray-800 flex-shrink-0">
         <div className="flex items-center justify-center space-x-4 text-gray-400 text-sm">
           <div className="flex items-center space-x-2">
             <div className="w-3 h-3 bg-yellow-500 rounded-full" />
