@@ -40,9 +40,15 @@ const AddToHomeButton: React.FC = () => {
 
     // Listen for beforeinstallprompt event
     const handleBeforeInstallPrompt = (e: Event) => {
+      // Prevent the default browser prompt so we can show our custom one
       e.preventDefault();
-      setDeferredPrompt(e as BeforeInstallPromptEvent);
-      setShowInstallPrompt(true);
+      const event = e as BeforeInstallPromptEvent;
+      setDeferredPrompt(event);
+      
+      // Show our custom prompt after a short delay to avoid conflicts
+      setTimeout(() => {
+        setShowInstallPrompt(true);
+      }, 1000);
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
@@ -63,17 +69,28 @@ const AddToHomeButton: React.FC = () => {
 
   const handleInstallClick = async () => {
     if (deferredPrompt) {
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      
-      if (outcome === 'accepted') {
-        console.log('User accepted the install prompt');
+      try {
+        // Show the install prompt
+        await deferredPrompt.prompt();
+        
+        // Wait for the user to respond to the prompt
+        const { outcome } = await deferredPrompt.userChoice;
+        
+        if (outcome === 'accepted') {
+          console.log('User accepted the install prompt');
+          setShowInstallPrompt(false);
+        } else {
+          console.log('User dismissed the install prompt');
+        }
+        
+        // Clean up the deferred prompt
+        setDeferredPrompt(null);
+      } catch (error) {
+        console.error('Error showing install prompt:', error);
+        // If there's an error, hide our custom prompt
         setShowInstallPrompt(false);
-      } else {
-        console.log('User dismissed the install prompt');
+        setDeferredPrompt(null);
       }
-      
-      setDeferredPrompt(null);
     }
   };
 
